@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: "/Users/uralgimazov/Desktop/Python/Home Credit"  # корень проекта
+      dockerfile: docker/Dockerfile.api
+    container_name: credit-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - /Users/uralgimazov/Desktop/Python/Home Credit/models:/app/models:ro
+    environment:
+      - MODEL_PATH=/app/models/pipeline_logreg.joblib
+
+  frontend:
+    build:
+      context: "/Users/uralgimazov/Desktop/Python/Home Credit"  # корень проекта
+      dockerfile: docker/Dockerfile.app
+    container_name: credit-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
