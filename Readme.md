@@ -4,12 +4,12 @@
 
 ## О проекте
 
-Это интерактивное приложение для оценки кредитного риска клиентов банка на основе данных соревнования [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk).
+Это интерактивное приложение для оценки кредитного риска клиентов банка на основе данных соревнования Kaggle [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk)
 
 Проект включает:
 
 - **Jupyter Notebook**: полный pipeline с EDA, очисткой данных, feature engineering, обучением моделей и подбором гиперпараметров через Optuna.
-- **FastAPI backend**: REST API для получения предсказаний модели.
+- **FastAPI backend**: API для получения предсказаний модели.
 - **Streamlit frontend**: веб-интерфейс для интерактивного тестирования кредитного скоринга.
 - **Docker**: контейнеризация для простого запуска и деплоя.
 
@@ -75,7 +75,6 @@ docker-compose up --build
 | Random Forest       | …      | …            |
 | CatBoost            | …      | …            |
 
-> Для повышения точности применены полиномиальные признаки и feature engineering.
 
 ---
 
@@ -97,14 +96,13 @@ docker-compose up --build
 
 ## 🔧 Дальнейшие шаги
 
-- Оптимизировать CatBoost / RandomForest для больших данных
 - Добавить автоматический сабмит на Kaggle
-- Настроить деплой в облаке с HTTPS
-- Добавить аутентификацию и rate-limiting для FastAPI
+- Настроить деплой на сервер с HTTPS
 
 ---
 
 ## 📌 Лицензия
 
-MIT License © Uralbeckins
+MIT License © Uralbeckins Corporation
+All Rights Reserved
 
