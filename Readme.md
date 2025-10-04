@@ -1,12 +1,23 @@
 # 🏦 Credit Score Prediction - Home Credit Bank
 
 &#x20;
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python" alt="Python Version">
+  <img src="https://img.shields.io/badge/Notebook-Jupyter-orange?logo=jupyter" alt="Jupyter">
+  <img src="https://img.shields.io/badge/Model-XGBoost-success?logo=xgboost" alt="Model">
+  <img src="https://img.shields.io/badge/ML-Classification-yellow?logo=scikitlearn" alt="Machine Learning">
+</p>
 
-## О проекте
+---
 
-Это интерактивное приложение для оценки кредитного риска клиентов банка на основе данных соревнования Kaggle - [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk)
+## 🧠 О проекте
 
-Проект включает:
+**Credit Score Prediction** — это проект по предсказанию кредитоспособности клиентов банка **Home Credit**, основанный на реальных данных с Kaggle [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk)
+
+Цель — определить вероятность того, что клиент не сможет вовремя вернуть кредит, используя данные о доходах, работе, семье и кредитной истории.
+
+
+### Проект включает:
 
 - **Jupyter Notebook**: полный pipeline с EDA, очисткой данных, feature engineering, обучением моделей и подбором гиперпараметров через Optuna.
 - **FastAPI backend**: API для получения предсказаний модели.
