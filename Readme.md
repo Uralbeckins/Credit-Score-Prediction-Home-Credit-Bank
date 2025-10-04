@@ -2,17 +2,19 @@
 
 &#x20;
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python" alt="Python Version">
-  <img src="https://img.shields.io/badge/Notebook-Jupyter-orange?logo=jupyter" alt="Jupyter">
-  <img src="https://img.shields.io/badge/Model-XGBoost-success?logo=xgboost" alt="Model">
-  <img src="https://img.shields.io/badge/ML-Classification-yellow?logo=scikitlearn" alt="Machine Learning">
+  <img src="https://img.shields.io/badge/Optuna-0090FF?logo=python&logoColor=white" alt="Python Version">
+  <img src="https://img.shields.io/badge/CatBoost-FFCC00?logo=catboost&logoColor=black" alt="Python Version">
+  <img src="https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white" alt="Python Version">
+  <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Jupyter">
+  <img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="Model">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white" alt="Streamlit">
 </p>
 
 ---
 
 ## 🧠 О проекте
 
-**Credit Score Prediction** — это проект по предсказанию кредитоспособности клиентов банка **Home Credit**, основанный на реальных данных с Kaggle [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk)
+**Credit Score Prediction** — это проект по предсказанию кредитоспособности клиентов банка **Home Credit**, основанный на реальных данных с Kaggle - [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk)
 
 Цель — определить вероятность того, что клиент не сможет вовремя вернуть кредит, используя данные о доходах, работе, семье и кредитной истории.
 
@@ -125,18 +127,28 @@ docker-compose up --build
 ---
 
 ## 🖼 Скриншоты интерфейса
-
-\
-
-
-> Замените эти картинки на свои скриншоты из веб-интерфейса.
+<img width="583" height="319" alt="image" src="https://github.com/user-attachments/assets/6b101392-0477-4fa2-8a79-a78d13308075" />
+<img width="599" height="225" alt="image" src="https://github.com/user-attachments/assets/382b9cb9-8ab3-4116-b5fd-0dcac95edf47" />
+<img width="582" height="186" alt="image" src="https://github.com/user-attachments/assets/0ca0c6d4-0649-4dcc-b82c-bf77f308db93" />
 
 ---
 
 ## 💾 Сохраненные модели
 
-- `pipeline_logreg.joblib` — логистическая регрессия с пайплайном (StandardScaler + LogisticRegression)
-- Другие модели можно добавить после обучения через Optuna.
+- `pipeline_logreg.joblib` — **Логистическая регрессия** с пайплайном (`StandardScaler` + `LogisticRegression`).  
+  Простая и интерпретируемая модель, использовалась как базовая для сравнения.
+
+- `best_model_catboost` — **CatBoostClassifier** от Яндекса.  
+  Отлично справился с категориальными признаками без необходимости ручного кодирования, показал высокую точность.
+
+- `best_model_xgboost` — **XGBoostClassifier**.  
+  Градиентный бустинг на деревьях решений, продемонстрировал хорошее качество и устойчивость к переобучению.
+
+- `best_model_random_forest` — **RandomForestClassifier**.  
+  Ансамблевая модель из множества деревьев решений, обеспечила стабильные результаты и хорошую интерпретируемость признаков.
+
+- `best_model_decision_tree` — **DecisionTreeClassifier**.  
+  Простая модель дерева решений, использовалась для анализа важности признаков и визуализации процесса классификации.
 
 ---
 
