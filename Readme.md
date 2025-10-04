@@ -128,8 +128,8 @@ docker-compose up --build
 | ------------------- | ------ | ------------ |
 | Logistic Regression | 0.696  | 0.69638      |
 | Decision Tree       | 0.540  | 0.53960      |
-| Random Forest       | …      | …            |
-| CatBoost            | …      | …            |
+| Random Forest       | 0.9914 | 0.71350      |
+| CatBoost            | 0.795  | 0.74924      |
 
 
 ## 💾 Сохраненные модели
