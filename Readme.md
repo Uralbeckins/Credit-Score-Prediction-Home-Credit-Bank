@@ -25,6 +25,8 @@
 <img width="599" height="225" alt="image" src="https://github.com/user-attachments/assets/382b9cb9-8ab3-4116-b5fd-0dcac95edf47" />
 <img width="582" height="186" alt="image" src="https://github.com/user-attachments/assets/0ca0c6d4-0649-4dcc-b82c-bf77f308db93" />
 
+> В приложении были применены только самые "интересные" признаки, а на самом деле, датасет содержит более 100 различных, включая даже материал стен вашего дома 🏠.
+
 ---
 
 ### Проект включает:
