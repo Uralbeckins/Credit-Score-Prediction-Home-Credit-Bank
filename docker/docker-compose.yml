@@ -1,19 +1,19 @@
 services:
   backend:
     build:
-      context: "/Users/uralgimazov/Desktop/Python/Home Credit"  # корень проекта
+      context: "/Users/uralgimazov/Desktop/Python/Credit-Score-Prediction-Home-Credit-Bank"  # корень проекта
       dockerfile: docker/Dockerfile.api
     container_name: credit-backend
     ports:
       - "8000:8000"
     volumes:
-      - /Users/uralgimazov/Desktop/Python/Home Credit/models:/app/models:ro
+      - /Users/uralgimazov/Desktop/Python/Credit-Score-Prediction-Home-Credit-Bank/models:/app/models:ro
     environment:
       - MODEL_PATH=/app/models/pipeline_logreg.joblib
 
   frontend:
     build:
-      context: "/Users/uralgimazov/Desktop/Python/Home Credit"  # корень проекта
+      context: "/Users/uralgimazov/Desktop/Python/Credit-Score-Prediction-Home-Credit-Bank"  # корень проекта
       dockerfile: docker/Dockerfile.app
     container_name: credit-frontend
     ports:
