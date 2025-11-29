@@ -8,17 +8,17 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies (requirements.txt is at project root)
-COPY ../requirements.txt /tmp/requirements.txt
+COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Copy project files
-COPY ../api /app/api
-COPY ../app /app/app
-COPY ../models /app/models
+# Copy project files (paths are relative to build context)
+COPY api /app/api
+COPY app /app/app
+COPY models /app/models
 
-# Supervisor config and optional start script
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY start.sh /app/start.sh
+# Supervisor config and optional start script (located in docker/)
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 EXPOSE 8000 8501
