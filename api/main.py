@@ -24,15 +24,15 @@ def predict(payload: Features):
     return {"score": proba}
 
 
-# cd "/Users/uralgimazov/Desktop/Python/Home Credit"
+# cd "/Users/uralgimazov/Desktop/Python/Credit-Score-Prediction-Home-Credit-Bank"
 # docker compose -f docker/docker-compose.yml up --build
 # open http://localhost:8501
 
-# cd "/Users/uralgimazov/Desktop/Python/Home Credit"
+# cd "/Users/uralgimazov/Desktop/Python/Credit-Score-Prediction-Home-Credit-Bank"
 # docker compose -f docker/docker-compose.yml
 
 
-# cd "/Users/uralgimazov/Desktop/Python/Home Credit"
+# cd "/Users/uralgimazov/Desktop/Python/Credit-Score-Prediction-Home-Credit-Bank"
 # docker compose -f docker/docker-compose.yml ps
 # curl -I http://127.0.0.1:8501 || echo "no ui"
 # open http://localhost:8501
