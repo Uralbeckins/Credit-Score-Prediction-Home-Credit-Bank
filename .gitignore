@@ -1,0 +1,66 @@
+# Исключаем папку с виртуальным окружением (Python)
+venv/
+env/
+ENV/
+
+# Зависимости
+node_modules/
+__pycache__/
+*.egg-info/
+
+# Логи и базы данных
+*.log
+*.sqlite3
+*.sqlite
+
+# Активы, созданные при сборке
+dist/
+build/
+out/
+coverage/
+
+# Файлы среды разработки
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Конфигурационные файлы
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Скомпилированные файлы
+*.pyc
+*.class
+*.o
+*.exe
+*.dll
+*.so
+
+# Артефакты деплоя
+.deploy/
+.deployments
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Резервные копии
+*~
+*.bak
+
+# Игнорировать конкретные файлы в папке Data
+Data/application_train
+Data/application_test
+Data/application_train.csv
+Data/application_test.csv

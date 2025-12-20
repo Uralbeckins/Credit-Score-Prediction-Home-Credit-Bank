@@ -11,7 +11,7 @@ RUN apt-get update \
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Copy project files (paths are relative to build context)
+# Copy project files (paths are relative to build context)]
 COPY api /app/api
 COPY app /app/app
 COPY models /app/models
