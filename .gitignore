@@ -60,7 +60,5 @@ $RECYCLE.BIN/
 *.bak
 
 # Игнорировать конкретные файлы в папке Data
-Data/application_train
-Data/application_test
 Data/application_train.csv
 Data/application_test.csv
