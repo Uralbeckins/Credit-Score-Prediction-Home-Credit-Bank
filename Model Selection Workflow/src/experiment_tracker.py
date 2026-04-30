@@ -32,6 +32,7 @@ def make_filename(exp_name: str, model_class: str, metric_str: str, now: datetim
         "RandomForestClassifier": "RF",
         "XGBClassifier": "XGB",
         "LGBMClassifier": "LGBM",
+        "DecisionTreeClassifier": "DT",
         "CatBoostClassifier": "CatBoost"
     }
 

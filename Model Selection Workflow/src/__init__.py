@@ -4,4 +4,4 @@ from .preprocessor import MyPreprocessor
 from .utils import get_num_cat_ord_cols, prepare_data
 from .train import train_optuna_cv
 from .eval import get_stats
-from .run import run_experiment
+from .main import run_experiment

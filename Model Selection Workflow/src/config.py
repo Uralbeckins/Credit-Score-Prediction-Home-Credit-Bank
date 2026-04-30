@@ -4,3 +4,5 @@ class Config:
     ORDINAL_COLS = []
     SEED = 42
     TEST_SIZE = 0.2
+    POLY_DEGREE = 3
+    POLY_FEATURES_COLS = ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3', 'AGE_YEARS']

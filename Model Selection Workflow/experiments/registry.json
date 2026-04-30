@@ -1,17 +1,35 @@
 {
   "LogisticRegression": {
-    "exp_name": "10_pc_nan",
+    "exp_name": "90_nan",
     "model_name": "LogisticRegression",
     "params": {
       "C": 0.07459343285726547,
       "max_iter": 1000
     },
     "eval_results": {
-      "auc_mean_cv": 0.7071,
-      "auc_std_cv": 0.0039,
-      "brier_score": 0.07
+      "auc_mean_cv": 0.7474,
+      "auc_std_cv": 0.0065,
+      "brier_score": 0.0677
     },
-    "timestamp": "2026-04-30 17:45",
+    "timestamp": "2026-04-30 22:53",
     "is_best": "True"
+  },
+  "DecisionTreeClassifier": {
+    "exp_name": "90_nan",
+    "model_name": "DecisionTreeClassifier",
+    "params": {
+      "criterion": "entropy",
+      "max_depth": 12,
+      "min_samples_split": 4,
+      "min_samples_leaf": 2,
+      "max_features": "log2"
+    },
+    "eval_results": {
+      "auc_mean_cv": 0.6505,
+      "auc_std_cv": 0.0101,
+      "brier_score": 0.0632
+    },
+    "timestamp": "2026-04-30 22:55",
+    "is_best": true
   }
 }

@@ -1,0 +1,18 @@
+{
+  "exp_name": "90_nan",
+  "model_name": "DecisionTreeClassifier",
+  "params": {
+    "criterion": "entropy",
+    "max_depth": 12,
+    "min_samples_split": 4,
+    "min_samples_leaf": 2,
+    "max_features": "log2"
+  },
+  "eval_results": {
+    "auc_mean_cv": 0.6505,
+    "auc_std_cv": 0.0101,
+    "brier_score": 0.0632
+  },
+  "timestamp": "2026-04-30 22:55",
+  "is_best": true
+}
