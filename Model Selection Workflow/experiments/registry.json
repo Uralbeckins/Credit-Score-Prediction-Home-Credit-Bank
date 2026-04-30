@@ -31,5 +31,43 @@
     },
     "timestamp": "2026-04-30 22:55",
     "is_best": true
+  },
+  "RandomForestClassifier": {
+    "exp_name": "90_nan",
+    "model_name": "RandomForestClassifier",
+    "params": {
+      "n_estimators": 175,
+      "max_depth": 13,
+      "min_samples_split": 15,
+      "min_samples_leaf": 6,
+      "max_features": "sqrt",
+      "bootstrap": true
+    },
+    "eval_results": {
+      "auc_mean_cv": 0.7305,
+      "auc_std_cv": 0.0079,
+      "brier_score": 0.0581
+    },
+    "timestamp": "2026-04-30 23:00",
+    "is_best": true
+  },
+  "CatBoostClassifier": {
+    "exp_name": "90_nan",
+    "model_name": "CatBoostClassifier",
+    "params": {
+      "iterations": 250,
+      "depth": 8,
+      "learning_rate": 0.1205712628744377,
+      "l2_leaf_reg": 6.387926357773329,
+      "border_count": 66,
+      "random_strength": 0.15599452033620265
+    },
+    "eval_results": {
+      "auc_mean_cv": 0.743,
+      "auc_std_cv": 0.0064,
+      "brier_score": 0.0518
+    },
+    "timestamp": "2026-04-30 23:07",
+    "is_best": "True"
   }
 }
