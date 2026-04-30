@@ -1,4 +1,4 @@
-from sklearn.impute import KNNImputer, SimpleImputer
+from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
@@ -16,7 +16,7 @@ class MyPreprocessor(BaseEstimator, TransformerMixin):
         # Numerical branch: scale -> KNN impute
         num_branch = Pipeline([
             ('scaler', StandardScaler()),
-            ('knn_imputer', KNNImputer(n_neighbors=n_neighbors))
+            ('knn_imputer', SimpleImputer(strategy='median'))
         ])
         
         # Categorical branch: mode impute (KNN doesn't work well for categorical)
