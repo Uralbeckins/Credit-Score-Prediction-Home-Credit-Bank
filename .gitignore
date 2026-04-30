@@ -59,7 +59,12 @@ $RECYCLE.BIN/
 *~
 *.bak
 
-# Игнорировать конкретные файлы в папке Data
-Data/application_train.csv
-Data/application_test.csv
-models/best_random_forest.joblib
+
+# Игнорировать все CSV файлы в папке Data
+Data/*.csv
+
+# Также игнорировать CSV в корне
+*.csv
+
+# Папка с большими файлами
+large_files/

@@ -7,10 +7,10 @@ from src import Config
 
 def train_optuna_cv(model_class, param_space_func, X, y, n_trials=1, cv_num=5):
     
-    num_cols, cat_cols, ord_cols = get_num_cat_ord_cols(X)
-    
+    num_cols, cat_cols, ord_cols, ord_cats = get_num_cat_ord_cols(X)
+
     preprocessor = MyPreprocessor(
-        num_cols, cat_cols, ord_cols
+        num_cols, cat_cols, ord_cols, ord_cats
     )
 
     def objective(trial):

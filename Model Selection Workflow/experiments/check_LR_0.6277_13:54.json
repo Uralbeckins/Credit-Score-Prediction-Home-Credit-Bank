@@ -1,0 +1,15 @@
+{
+  "exp_name": "check",
+  "model_name": "LogisticRegression",
+  "params": {
+    "C": 0.07459343285726547,
+    "max_iter": 1000
+  },
+  "eval_results": {
+    "auc_mean_cv": 0.6277,
+    "auc_std_cv": 0.0101,
+    "brier_score": 0.0728
+  },
+  "timestamp": "2026-04-30 13:54",
+  "is_best": "True"
+}
