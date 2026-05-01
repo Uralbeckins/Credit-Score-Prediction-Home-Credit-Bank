@@ -43,17 +43,34 @@
 ```
 Credit-Score-Prediction-Home-Credit-Bank/
 │
-├─ notebook.ipynb               # Jupyter Notebook с обработкой данных и моделями
-├─ backend/
-│   ├─ main.py                  # FastAPI backend
-│   ├─ models/                  # сохраненные модели (pipeline_logreg.joblib и др.)
-│   └─ requirements.txt
-├─ web/
-│   ├─ app.py                   # Streamlit frontend
-│   └─ requirements.txt
-├─ docker-compose.yml
-├─ README.md
-└─ docs/
+├─ api/                                 # FastAPI backend
+├─ app/                                 # Streamlit frontend
+├─ data/
+├─ docker/                              # Docker конфигурация
+│
+├─ Model Selection Workflow/            # Основная рабочая директория
+│   │
+│   ├─ 1-EDA.ipynb                      # Exploratory Data Analysis
+│   ├─ 2-Feature_Engineering.ipynb      # Feature Engineering
+│   ├─ 3-Model_training.ipynb           # Обучение и оптимизация моделей
+│   │
+│   ├─ src/                             # Модульный исходный код ⚡
+│   │   ├─ __init__.py
+│   │   ├─ config.py
+│   │   ├─ main.py
+│   │   ├─ preprocessor.py
+│   │   ├─ train.py
+│   │   ├─ eval.py
+│   │   ├─ utils.py
+│   │   └─ experiment_tracker.py
+│   │
+│   ├─ models/                          # Сохраненные модели
+│   │
+│   └─ experiments/                     # Результаты экспериментов
+│
+├─ docs/                                # Документация
+├─ Readme.md
+└─ requirements.txt
 ```
 ---
 ## 🧩 Используемые технологии
