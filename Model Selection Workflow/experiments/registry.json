@@ -1,73 +1,19 @@
 {
-  "LogisticRegression": {
+  "LGBMClassifier": {
     "exp_name": "90_nan",
-    "model_name": "LogisticRegression",
+    "model_name": "LGBMClassifier",
     "params": {
-      "C": 0.07459343285726547,
-      "max_iter": 1000
+      "n_estimators": 478,
+      "max_depth": 5,
+      "learning_rate": 0.0431646733732235,
+      "subsample": 0.5089809378074098
     },
     "eval_results": {
-      "auc_mean_cv": 0.7474,
-      "auc_std_cv": 0.0065,
-      "brier_score": 0.0677
+      "auc_mean_cv": 0.7435,
+      "auc_std_cv": 0.0049,
+      "brier_score": 0.056
     },
-    "timestamp": "2026-04-30 22:53",
-    "is_best": "True"
-  },
-  "DecisionTreeClassifier": {
-    "exp_name": "90_nan",
-    "model_name": "DecisionTreeClassifier",
-    "params": {
-      "criterion": "entropy",
-      "max_depth": 12,
-      "min_samples_split": 4,
-      "min_samples_leaf": 2,
-      "max_features": "log2"
-    },
-    "eval_results": {
-      "auc_mean_cv": 0.6505,
-      "auc_std_cv": 0.0101,
-      "brier_score": 0.0632
-    },
-    "timestamp": "2026-04-30 22:55",
-    "is_best": true
-  },
-  "RandomForestClassifier": {
-    "exp_name": "90_nan",
-    "model_name": "RandomForestClassifier",
-    "params": {
-      "n_estimators": 175,
-      "max_depth": 13,
-      "min_samples_split": 15,
-      "min_samples_leaf": 6,
-      "max_features": "sqrt",
-      "bootstrap": true
-    },
-    "eval_results": {
-      "auc_mean_cv": 0.7305,
-      "auc_std_cv": 0.0079,
-      "brier_score": 0.0581
-    },
-    "timestamp": "2026-04-30 23:00",
-    "is_best": true
-  },
-  "CatBoostClassifier": {
-    "exp_name": "90_nan",
-    "model_name": "CatBoostClassifier",
-    "params": {
-      "iterations": 250,
-      "depth": 8,
-      "learning_rate": 0.1205712628744377,
-      "l2_leaf_reg": 6.387926357773329,
-      "border_count": 66,
-      "random_strength": 0.15599452033620265
-    },
-    "eval_results": {
-      "auc_mean_cv": 0.743,
-      "auc_std_cv": 0.0064,
-      "brier_score": 0.0518
-    },
-    "timestamp": "2026-04-30 23:07",
+    "timestamp": "2026-05-05 00:13",
     "is_best": "True"
   }
 }

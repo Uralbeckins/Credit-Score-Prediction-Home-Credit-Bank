@@ -24,7 +24,6 @@ class MyPreprocessor(BaseEstimator, TransformerMixin):
             ('encoder', OneHotEncoder(drop='first', handle_unknown='ignore'))
         ])
         
-        # Ordinal branch: mode impute -> ordinal encode
         ord_branch = Pipeline([
             ('mode_imputer', SimpleImputer(strategy='most_frequent')),
             ('encoder', OrdinalEncoder(categories=ord_categories,

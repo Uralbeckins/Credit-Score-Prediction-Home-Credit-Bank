@@ -1,0 +1,17 @@
+{
+  "exp_name": "90_nan",
+  "model_name": "LGBMClassifier",
+  "params": {
+    "n_estimators": 478,
+    "max_depth": 5,
+    "learning_rate": 0.0431646733732235,
+    "subsample": 0.5089809378074098
+  },
+  "eval_results": {
+    "auc_mean_cv": 0.7435,
+    "auc_std_cv": 0.0049,
+    "brier_score": 0.056
+  },
+  "timestamp": "2026-05-04 23:51",
+  "is_best": "True"
+}

@@ -35,7 +35,9 @@ def get_stats(pipeline, X_val, y_val, cv_num=5):
 
     # ROC — показываем только легенду с auc_mean ± auc_std
     fpr, tpr, _ = roc_curve(y_val, y_val_proba)
-    axes[0].plot(fpr, tpr, label=f'AUC (CV) = {auc_mean:.4f} ± {auc_std:.4f}', color='blue')
+    auc_plot = roc_auc_score(y_val, y_val_proba)
+
+    axes[0].plot(fpr, tpr, label=f'AUC (plot) = {auc_plot:.4f}\nAUC (CV) = {auc_mean:.4f} ± {auc_std:.4f}', color='blue')
     axes[0].plot([0, 1], [0, 1], linestyle='--', color='green')
     axes[0].set_xlabel('False Positive Rate')
     axes[0].set_ylabel('True Positive Rate')
