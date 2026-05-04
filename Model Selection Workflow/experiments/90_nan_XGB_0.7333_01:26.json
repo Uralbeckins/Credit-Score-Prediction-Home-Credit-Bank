@@ -1,0 +1,20 @@
+{
+  "exp_name": "90_nan",
+  "model_name": "XGBClassifier",
+  "params": {
+    "learning_rate": 0.07725378389307355,
+    "max_depth": 8,
+    "n_estimators": 110,
+    "subsample": 0.9849549260809971,
+    "min_child_weight": 9,
+    "colsample_bytree": 0.6849356442713105,
+    "scale_pos_weight": 11
+  },
+  "eval_results": {
+    "auc_mean_cv": 0.7333,
+    "auc_std_cv": 0.007,
+    "brier_score": 0.1693
+  },
+  "timestamp": "2026-05-05 01:26",
+  "is_best": "True"
+}

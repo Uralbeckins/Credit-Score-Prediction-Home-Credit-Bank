@@ -13,7 +13,7 @@ def run_experiment(exp_name, model_class, param_space_func, df, n_trials=1, cv_n
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=Config.TEST_SIZE, random_state=Config.SEED, stratify=y)
     
     best_pipeline, best_params = train_optuna_cv(model_class, param_space_func, X_train, y_train, n_trials=n_trials, cv_num=cv_num)
-    eval_results = get_stats(best_pipeline, X_val, y_val)
+    eval_results = get_stats(best_pipeline, X_train, y_train, X_val, y_val)
     
     save_experiment(
         exp_name,

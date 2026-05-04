@@ -11,7 +11,7 @@ from sklearn.calibration import calibration_curve
 from src import Config
 
 
-def get_stats(pipeline, X_val, y_val, cv_num=5):
+def get_stats(pipeline, X_train, y_train, X_val, y_val, cv_num=5):
     cv = StratifiedKFold(n_splits=cv_num, shuffle=True, random_state=Config.SEED)
 
     # ROC AUC через кросс-валидацию (среднее и std)
@@ -26,7 +26,7 @@ def get_stats(pipeline, X_val, y_val, cv_num=5):
     auc_std = auc_scores.std()
 
     # Обучаем pipeline на всей валидационной выборке для proba и Brier score
-    pipeline.fit(X_val, y_val)
+    pipeline.fit(X_train, y_train)
     y_val_proba = pipeline.predict_proba(X_val)[:, 1]
     brier = brier_score_loss(y_val, y_val_proba)
 
