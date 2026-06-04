@@ -20,7 +20,7 @@ def get_stats(pipeline, X_train, y_train, X_val, y_val, cv_num=5):
         cv=cv,
         scoring='roc_auc',
         n_jobs=-1,
-        verbose=1
+        verbose=0
     )
     auc_mean = auc_scores.mean()
     auc_std = auc_scores.std()

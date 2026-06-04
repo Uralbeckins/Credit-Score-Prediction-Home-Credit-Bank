@@ -3,16 +3,16 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder, PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn import set_config
 from src import Config
 
 
 class MyPreprocessor(BaseEstimator, TransformerMixin):
-    def __init__(self, num_cols, cat_cols, ord_cols, ord_categories, n_neighbors=2):
+    def __init__(self, num_cols, cat_cols, ord_cols, ord_categories):
         self.num_cols = num_cols
         self.cat_cols = cat_cols
         self.ord_cols = ord_cols
         self.ord_categories = ord_categories
-        self.n_neighbors = n_neighbors
         
         num_branch = Pipeline([
             ('scaler', StandardScaler()),
@@ -73,6 +73,42 @@ class MyPreprocessor(BaseEstimator, TransformerMixin):
     
     def fit(self, X, y=None):
         self.preprocessor.fit(X, y)
+        return self
+    
+    def transform(self, X):
+        return self.preprocessor.transform(X)
+    
+    def fit_transform(self, X, y=None):
+        return self.preprocessor.fit_transform(X, y)
+
+
+class CatBoostPreprocessor(BaseEstimator, TransformerMixin):
+    def __init__(self, num_cols, cat_cols, ord_cols, ord_categories):
+        self.num_cols = num_cols
+        self.cat_cols = cat_cols
+        self.ord_cols = ord_cols
+        self.ord_categories = ord_categories
+        
+        # Сохраняем выход как pandas DataFrame для сохранения названий столбцов
+        
+        num_branch = Pipeline([
+            ('scaler', StandardScaler()),
+            ('knn_imputer', SimpleImputer(strategy='median'))
+        ])
+        
+        cat_branch = Pipeline([
+            ('mode_imputer', SimpleImputer(strategy='most_frequent'))
+        ])
+
+        # Combine all
+        self.preprocessor = ColumnTransformer([
+            ('numerical', num_branch, num_cols),
+            ('categorical', cat_branch, cat_cols)
+        ], remainder='drop')
+    
+    def fit(self, X, y=None):
+        self.preprocessor.fit(X, y)
+        self.set_output(transform='pandas')
         return self
     
     def transform(self, X):

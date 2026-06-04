@@ -37,5 +37,40 @@
     },
     "timestamp": "2026-05-05 01:53",
     "is_best": "True"
+  },
+  "CatBoostClassifier": {
+    "exp_name": "90_nan",
+    "model_name": "CatBoostClassifier",
+    "params": {
+      "iterations": 250,
+      "depth": 10,
+      "learning_rate": 0.1205712628744377,
+      "l2_leaf_reg": 6.387926357773329,
+      "border_count": 66,
+      "random_strength": 0.15599452033620265,
+      "subsample": 0.5290418060840998
+    },
+    "eval_results": {
+      "auc_mean_cv": 0.7366,
+      "auc_std_cv": 0.0101,
+      "brier_score": 0.0679
+    },
+    "timestamp": "2026-05-07 14:20",
+    "is_best": "True"
+  },
+  "LogisticRegression": {
+    "exp_name": "90_nan",
+    "model_name": "LogisticRegression",
+    "params": {
+      "C": 53.17196633982102,
+      "max_iter": 200
+    },
+    "eval_results": {
+      "auc_mean_cv": 0.7453,
+      "auc_std_cv": 0.0071,
+      "brier_score": 0.0681
+    },
+    "timestamp": "2026-05-08 09:41",
+    "is_best": "True"
   }
 }

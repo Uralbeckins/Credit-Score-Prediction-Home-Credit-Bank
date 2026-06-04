@@ -1,0 +1,370 @@
+{
+  "dataset": "previous_application.csv",
+  "description": "История предыдущих заявок клиентов Home Credit Bank. Связывается с application_train/application_test через SK_ID_CURR. Используется для агрегации фич по клиенту.",
+  "size": {
+    "rows": 1670214,
+    "columns": 37,
+    "disk_mb": 386,
+    "memory_mb": 1900
+  },
+  "keys": {
+    "SK_ID_PREV": "Уникальный ID предыдущей заявки (первичный ключ таблицы)",
+    "SK_ID_CURR": "ID клиента (внешний ключ к application_train/application_test)"
+  },
+  "stats": {
+    "unique_clients": 338857,
+    "unique_applications": 1670214,
+    "avg_apps_per_client": 4.93
+  },
+  "columns": {
+    "SK_ID_PREV": {
+      "type": "int64",
+      "missing_pct": 0.0,
+      "description": "Уникальный идентификатор предыдущей заявки"
+    },
+    "SK_ID_CURR": {
+      "type": "int64",
+      "missing_pct": 0.0,
+      "description": "Идентификатор текущего клиента, ключ связи с application_train.csv"
+    },
+    "NAME_CONTRACT_TYPE": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Тип кредитного договора",
+      "values": {
+        "Cash loans": 747553,
+        "Consumer loans": 729151,
+        "Revolving loans": 193164,
+        "XNA": 346
+      }
+    },
+    "AMT_ANNUITY": {
+      "type": "float64",
+      "missing_pct": 22.3,
+      "description": "Сумма ежемесячного платежа по заявке"
+    },
+    "AMT_APPLICATION": {
+      "type": "float64",
+      "missing_pct": 0.0,
+      "description": "Запрошенная сумма кредита в заявке"
+    },
+    "AMT_CREDIT": {
+      "type": "float64",
+      "missing_pct": 0.0,
+      "description": "Одобренная сумма кредита (1 пропуск)"
+    },
+    "AMT_DOWN_PAYMENT": {
+      "type": "float64",
+      "missing_pct": 53.6,
+      "description": "Первоначальный взнос"
+    },
+    "AMT_GOODS_PRICE": {
+      "type": "float64",
+      "missing_pct": 23.1,
+      "description": "Стоимость товара (для потребительских кредитов)"
+    },
+    "WEEKDAY_APPR_PROCESS_START": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "День недели начала обработки заявки",
+      "values": {
+        "TUESDAY": 255118,
+        "WEDNESDAY": 255010,
+        "MONDAY": 253557,
+        "FRIDAY": 252048,
+        "THURSDAY": 249099,
+        "SATURDAY": 240631,
+        "SUNDAY": 164751
+      }
+    },
+    "HOUR_APPR_PROCESS_START": {
+      "type": "int64",
+      "missing_pct": 0.0,
+      "description": "Час начала обработки заявки (0–23)"
+    },
+    "FLAG_LAST_APPL_PER_CONTRACT": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Флаг: последняя ли это заявка по данному договору",
+      "values": {
+        "Y": 1661739,
+        "N": 8475
+      }
+    },
+    "NFLAG_LAST_APPL_IN_DAY": {
+      "type": "int64",
+      "missing_pct": 0.0,
+      "description": "Флаг: последняя ли заявка в этот день (0/1)"
+    },
+    "RATE_DOWN_PAYMENT": {
+      "type": "float64",
+      "missing_pct": 53.6,
+      "description": "Доля первоначального взноса от стоимости (нормализованная)"
+    },
+    "RATE_INTEREST_PRIMARY": {
+      "type": "float64",
+      "missing_pct": 99.6,
+      "description": "Основная процентная ставка (почти всегда пропущена, бесполезна в агрегации)",
+      "warning": "СЛИШКОМ МНОГО ПРОПУСКОВ — исключить из модели"
+    },
+    "RATE_INTEREST_PRIVILEGED": {
+      "type": "float64",
+      "missing_pct": 99.6,
+      "description": "Льготная процентная ставка (почти всегда пропущена, бесполезна в агрегации)",
+      "warning": "СЛИШКОМ МНОГО ПРОПУСКОВ — исключить из модели"
+    },
+    "NAME_CASH_LOAN_PURPOSE": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Цель кредита наличными",
+      "values_top": {
+        "XAP": 922661,
+        "XNA": 677918,
+        "Repairs": 23765,
+        "Other": 15608,
+        "Urgent needs": 8412,
+        "Buying a used car": 2888,
+        "Building a house or an annex": 2693,
+        "Everyday expenses": 2416,
+        "Medicine": 2174,
+        "Payments on other loans": 1931,
+        "Education": 1573,
+        "Journey": 1239,
+        "Purchase of electronic equipment": 1061,
+        "Buying a new car": 1012,
+        "Wedding / gift / holiday": 962
+      }
+    },
+    "NAME_CONTRACT_STATUS": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Статус договора — ключевой признак для агрегации (доля одобренных/отказанных)",
+      "values": {
+        "Approved": 1036781,
+        "Canceled": 316319,
+        "Refused": 290678,
+        "Unused offer": 26436
+      }
+    },
+    "DAYS_DECISION": {
+      "type": "int64",
+      "missing_pct": 0.0,
+      "description": "Дней до решения по заявке относительно даты подачи текущей заявки (отрицательные = в прошлом)"
+    },
+    "NAME_PAYMENT_TYPE": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Способ выплаты",
+      "values": {
+        "Cash through the bank": 1033552,
+        "XNA": 627384,
+        "Non-cash from your account": 8193,
+        "Cashless from the account of the employer": 1085
+      }
+    },
+    "CODE_REJECT_REASON": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Код причины отказа — важный признак (XAP = не отказано / не применимо)",
+      "values": {
+        "XAP": 1353093,
+        "HC": 175231,
+        "LIMIT": 55680,
+        "SCO": 37467,
+        "CLIENT": 26436,
+        "SCOFR": 12811,
+        "XNA": 5244,
+        "VERIF": 3535,
+        "SYSTEM": 717
+      }
+    },
+    "NAME_TYPE_SUITE": {
+      "type": "categorical",
+      "missing_pct": 49.1,
+      "description": "С кем подавал заявку",
+      "values": {
+        "Unaccompanied": 508970,
+        "Family": 213263,
+        "Spouse, partner": 67069,
+        "Children": 31566,
+        "Other_B": 17624,
+        "Other_A": 9077,
+        "Group of people": 2240
+      }
+    },
+    "NAME_CLIENT_TYPE": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Тип клиента",
+      "values": {
+        "Repeater": 1231261,
+        "New": 301363,
+        "Refreshed": 135649,
+        "XNA": 1941
+      }
+    },
+    "NAME_GOODS_CATEGORY": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Категория товара (для потребительских кредитов)",
+      "values_top": {
+        "XNA": 950809,
+        "Mobile": 224708,
+        "Consumer Electronics": 121576,
+        "Computers": 105769,
+        "Audio/Video": 99441,
+        "Furniture": 53656,
+        "Photo / Cinema Equipment": 25021,
+        "Construction Materials": 24995,
+        "Clothing and Accessories": 23554
+      }
+    },
+    "NAME_PORTFOLIO": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Портфель продукта",
+      "values": {
+        "POS": 691011,
+        "Cash": 461563,
+        "XNA": 372230,
+        "Cards": 144985,
+        "Cars": 425
+      }
+    },
+    "NAME_PRODUCT_TYPE": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Тип продукта",
+      "values": {
+        "XNA": 1063666,
+        "x-sell": 456287,
+        "walk-in": 150261
+      }
+    },
+    "CHANNEL_TYPE": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Канал подачи заявки",
+      "values": {
+        "Credit and cash offices": 719968,
+        "Country-wide": 494690,
+        "Stone": 212083,
+        "Regional / Local": 108528,
+        "Contact center": 71297,
+        "AP+ (Cash loan)": 57046,
+        "Channel of corporate sales": 6150,
+        "Car dealer": 452
+      }
+    },
+    "SELLERPLACE_AREA": {
+      "type": "int64",
+      "missing_pct": 0.0,
+      "description": "Площадь торговой точки продавца"
+    },
+    "NAME_SELLER_INDUSTRY": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Отрасль продавца",
+      "values": {
+        "XNA": 855720,
+        "Consumer electronics": 398265,
+        "Connectivity": 276029,
+        "Furniture": 57849,
+        "Construction": 29781,
+        "Clothing": 23949,
+        "Industry": 19194,
+        "Auto technology": 4990,
+        "Jewelry": 2709,
+        "MLM partners": 1215,
+        "Tourism": 513
+      }
+    },
+    "CNT_PAYMENT": {
+      "type": "float64",
+      "missing_pct": 22.3,
+      "description": "Количество платежей по кредиту"
+    },
+    "NAME_YIELD_GROUP": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Группа доходности клиента",
+      "values": {
+        "XNA": 517215,
+        "middle": 385532,
+        "high": 353331,
+        "low_normal": 322095,
+        "low_action": 92041
+      }
+    },
+    "PRODUCT_COMBINATION": {
+      "type": "categorical",
+      "missing_pct": 0.0,
+      "description": "Комбинация продуктов (детализация)",
+      "values_top": {
+        "Cash": 285990,
+        "POS household with interest": 263622,
+        "POS mobile with interest": 220670,
+        "Cash X-Sell: middle": 143883,
+        "Cash X-Sell: low": 130248,
+        "Card Street": 112582,
+        "POS industry with interest": 98833,
+        "POS household without interest": 82908,
+        "Card X-Sell": 80582,
+        "Cash Street: high": 59639,
+        "Cash X-Sell: high": 59301
+      }
+    },
+    "DAYS_FIRST_DRAWING": {
+      "type": "float64",
+      "missing_pct": 40.3,
+      "description": "Дней до первой выдачи относительно даты подачи текущей заявки",
+      "note": "Пропущено для не-одобренных/отменённых заявок"
+    },
+    "DAYS_FIRST_DUE": {
+      "type": "float64",
+      "missing_pct": 40.3,
+      "description": "Дней до первого платежа"
+    },
+    "DAYS_LAST_DUE_1ST_VERSION": {
+      "type": "float64",
+      "missing_pct": 40.3,
+      "description": "Дней до последнего платежа (первая версия графика)"
+    },
+    "DAYS_LAST_DUE": {
+      "type": "float64",
+      "missing_pct": 40.3,
+      "description": "Дней до последнего платежа (факт)"
+    },
+    "DAYS_TERMINATION": {
+      "type": "float64",
+      "missing_pct": 40.3,
+      "description": "Дней до закрытия договора"
+    },
+    "NFLAG_INSURED_ON_APPROVAL": {
+      "type": "float64",
+      "missing_pct": 40.3,
+      "description": "Флаг: была ли страховка на момент одобрения (0.0/1.0)"
+    }
+  },
+  "usage_in_pipeline": {
+    "link_key": "SK_ID_CURR",
+    "target_table": "application_train.csv / application_test.csv",
+    "aggregation_strategy": "Группировка по SK_ID_CURR с вычислением агрегатов: count, nunique, mean, median, std, min, max по числовым; mode, value_counts по категориальным",
+    "key_numeric_for_agg": [
+      "AMT_ANNUITY", "AMT_APPLICATION", "AMT_CREDIT", "AMT_DOWN_PAYMENT",
+      "AMT_GOODS_PRICE", "DAYS_DECISION", "CNT_PAYMENT", "SELLERPLACE_AREA",
+      "DAYS_FIRST_DRAWING", "DAYS_FIRST_DUE", "DAYS_LAST_DUE"
+    ],
+    "key_categorical_for_agg": [
+      "NAME_CONTRACT_TYPE", "NAME_CONTRACT_STATUS", "CODE_REJECT_REASON",
+      "NAME_CLIENT_TYPE", "NAME_PORTFOLIO", "NAME_PRODUCT_TYPE",
+      "CHANNEL_TYPE", "NAME_YIELD_GROUP", "NAME_PAYMENT_TYPE"
+    ],
+    "columns_to_skip": [
+      "RATE_INTEREST_PRIMARY", "RATE_INTEREST_PRIVILEGED"
+    ],
+    "columns_with_50pct_missing": [
+      "RATE_DOWN_PAYMENT", "AMT_DOWN_PAYMENT"
+    ]
+  }
+}

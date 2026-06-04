@@ -25,9 +25,11 @@ def run_experiment(exp_name, model_class, param_space_func, df, n_trials=1, cv_n
     if save_model:
         joblib.dump(best_pipeline, f'models/{model_class.__name__}_model.joblib')
    
-    # выход потом поменяю, пока колхозинг)
-    return {
+    results =   {
         'auc_mean_cv': f'{eval_results["auc_mean_cv"]:.4f}',
         'auc_std_cv': f'{eval_results["auc_std_cv"]:.4f}',
         'brier_score': f'{eval_results["brier_score"]:.4f}'
-        }
+    }
+
+    # выход потом поменяю, пока колхозинг)
+    return best_pipeline, results
