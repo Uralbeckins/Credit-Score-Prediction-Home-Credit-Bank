@@ -1,21 +1,21 @@
 {
   "LGBMClassifier": {
-    "exp_name": "90_nan",
+    "exp_name": "check_pipeline",
     "model_name": "LGBMClassifier",
     "params": {
-      "n_estimators": 457,
-      "max_depth": 5,
-      "learning_rate": 0.025097911981855864,
-      "num_leaves": 81,
-      "min_child_samples": 50,
-      "subsample": 0.5541838336753583
+      "n_estimators": 100,
+      "max_depth": 8,
+      "learning_rate": 0.1205712628744377,
+      "num_leaves": 98,
+      "min_child_samples": 12,
+      "subsample": 0.5779972601681014
     },
     "eval_results": {
-      "auc_mean_cv": 0.7477,
-      "auc_std_cv": 0.0056,
-      "brier_score": 0.0675
+      "auc_mean_cv": 0.7271,
+      "auc_std_cv": 0.0064,
+      "brier_score": 0.0679
     },
-    "timestamp": "2026-05-05 01:22",
+    "timestamp": "2026-06-12 15:07",
     "is_best": "True"
   },
   "XGBClassifier": {

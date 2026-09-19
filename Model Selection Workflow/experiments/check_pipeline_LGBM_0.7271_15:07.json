@@ -1,0 +1,19 @@
+{
+  "exp_name": "check_pipeline",
+  "model_name": "LGBMClassifier",
+  "params": {
+    "n_estimators": 100,
+    "max_depth": 8,
+    "learning_rate": 0.1205712628744377,
+    "num_leaves": 98,
+    "min_child_samples": 12,
+    "subsample": 0.5779972601681014
+  },
+  "eval_results": {
+    "auc_mean_cv": 0.7271,
+    "auc_std_cv": 0.0064,
+    "brier_score": 0.0679
+  },
+  "timestamp": "2026-06-12 15:07",
+  "is_best": "True"
+}

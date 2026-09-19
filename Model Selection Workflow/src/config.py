@@ -1,8 +1,16 @@
+import yaml
+from typing import Dict, Any, Union
+
 class Config:
-    TARGET_COL = 'TARGET'
-    DROP_COLS = ['SK_ID_CURR']
-    ORDINAL_COLS = []
-    SEED = 42
-    TEST_SIZE = 0.2
-    POLY_DEGREE = 3
-    POLY_FEATURES_COLS = ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3', 'AGE_YEARS']
+
+    data_path: str
+    model_name: str
+    search_space: Dict
+    preprocessor: str
+    num_studies: int
+
+    def __init__(self, path):
+        with open(path, "r", encoding="utf-8") as f:
+            self.data = yaml.safe_load(f)
+
+        print(self.data)
