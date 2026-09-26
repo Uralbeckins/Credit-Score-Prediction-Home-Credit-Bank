@@ -43,17 +43,34 @@
 ```
 Credit-Score-Prediction-Home-Credit-Bank/
 │
-├─ notebook.ipynb               # Jupyter Notebook с обработкой данных и моделями
-├─ backend/
-│   ├─ main.py                  # FastAPI backend
-│   ├─ models/                  # сохраненные модели (pipeline_logreg.joblib и др.)
-│   └─ requirements.txt
-├─ web/
-│   ├─ app.py                   # Streamlit frontend
-│   └─ requirements.txt
-├─ docker-compose.yml
-├─ README.md
-└─ docs/
+├─ api/                                 # FastAPI backend
+├─ app/                                 # Streamlit frontend
+├─ data/
+├─ docker/                              # Docker конфигурация
+│
+├─ Model Selection Workflow/            # Основная рабочая директория
+│   │
+│   ├─ 1-EDA.ipynb                      # Exploratory Data Analysis
+│   ├─ 2-Feature_Engineering.ipynb      # Feature Engineering
+│   ├─ 3-Model_training.ipynb           # Обучение и оптимизация моделей
+│   │
+│   ├─ src/                             # Модульный исходный код ⚡
+│   │   ├─ __init__.py
+│   │   ├─ config.py
+│   │   ├─ main.py
+│   │   ├─ preprocessor.py
+│   │   ├─ train.py
+│   │   ├─ eval.py
+│   │   ├─ utils.py
+│   │   └─ experiment_tracker.py
+│   │
+│   ├─ models/                          # Сохраненные модели
+│   │
+│   └─ experiments/                     # Результаты экспериментов
+│
+├─ docs/                                # Документация
+├─ Readme.md
+└─ requirements.txt
 ```
 ---
 ## 🧩 Используемые технологии
@@ -73,7 +90,8 @@ Credit-Score-Prediction-Home-Credit-Bank/
 
 ### 3. 🧩 Пропуски, масштабирование и кодирование признаков
 
-- **sklearn.impute.SimpleImputer** — заполнение пропусков медианой или наиболее частым значением.
+- **Pipeline и ColumnTransformer** - кастомный препроцессор обрабатывает числовые, категориальные признаки раздельно, обеспечивая корректную работу с пропусками и неизвестными категориями.
+**sklearn.impute.SimpleImputer** — заполнение пропусков медианой или наиболее частым значением.
 - **KNNImputer** — восстановление пропусков на основе ближайших соседей (опционально).
 - **StandardScaler** — масштабирование (нормализация) числовых признаков.
 - **OrdinalEncoder и OneHotEncoder** — кодирование категориальных признаков (порядковое и one-hot).
@@ -85,7 +103,7 @@ Credit-Score-Prediction-Home-Credit-Bank/
   - LogisticRegression с пайплайном (масштабирование + регуляризация elasticnet)
   - DecisionTreeClassifier, RandomForestClassifier для обучения базовых и ансамблевых деревьев
   - Cross-validation и StratifiedKFold для надежной оценки моделей
-  - ROC/AUC для метрик качества
+  - ROC AUC and Brier Score для метрик качества
 - **CatBoost** — градиентный бустинг на деревьях, работающий с категориальными признаками без кодирования
 - **Optuna** — автоматическая оптимизация гиперпараметров моделей
 - **Joblib** — сохранение и загрузка обученных моделей и пайплайнов для последующего использования в API и веб-интерфейсе
@@ -134,7 +152,7 @@ docker-compose up --build
 
 ## 💾 Сохраненные модели
 
-- `pipeline_logreg.joblib` — **Логистическая регрессия** с пайплайном (`StandardScaler` + `LogisticRegression`).  
+- `pipeline_logreg.joblib` — **Логистическая регрессия** с пайплайном 
   Простая и интерпретируемая модель, использовалась как базовая для сравнения.
 
 - `best_model_catboost` — **CatBoostClassifier** от Яндекса.  

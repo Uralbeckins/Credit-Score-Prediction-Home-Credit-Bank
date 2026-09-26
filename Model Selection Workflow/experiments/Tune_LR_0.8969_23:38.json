@@ -1,0 +1,10 @@
+{
+  "exp_name": "Tune",
+  "model_name": "LogisticRegression",
+  "timestamp": "2026-09-26 23:38",
+  "params": {
+    "C": 375
+  },
+  "eval_result": 0.8968543496695947,
+  "is_best": true
+}

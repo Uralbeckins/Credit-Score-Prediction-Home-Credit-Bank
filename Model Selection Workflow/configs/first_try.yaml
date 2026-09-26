@@ -1,0 +1,29 @@
+data:
+  train_path: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/dddata.csv'
+  test_path: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/application_test.csv'
+  target_col: 'TARGET'
+  drop_cols: ['SK_ID_CURR']
+  test_size: 0.2
+  # poly_degree: 3
+  # poly_features_cols: ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3', 'AGE_YEARS']
+
+model:
+  name: 'LogisticRegression'
+  fixed_params:
+    {}
+  search_space:
+    C:
+      type: 'int'
+      low: 1
+      high: 1000
+    
+cv:
+  metric: 'ROC_AUC'
+  cv_num: 2
+  n_trials: 1
+  # save_model: false
+
+tracker:
+  exp_name: 'Tune'
+  exp_dir: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model Selection Workflow/experiments'
+  db_dir: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model Selection Workflow/db'
