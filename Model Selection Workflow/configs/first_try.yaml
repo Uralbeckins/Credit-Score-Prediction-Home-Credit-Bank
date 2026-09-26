@@ -26,3 +26,4 @@ cv:
 tracker:
   exp_name: 'Tune'
   exp_dir: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model Selection Workflow/experiments'
+  db_dir: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model Selection Workflow/db'

@@ -3,7 +3,7 @@ import pandas as pd
 # from optuna.trial import TrialState
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 from sklearn.pipeline import Pipeline
-from src import Config
+from src import ExperimentTracker
 # from catboost import Pool, cv
 from sklearn.metrics import roc_auc_score
 import numpy as np
@@ -11,8 +11,6 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder, PolynomialFeatures
-
-
 
 
 
@@ -41,7 +39,6 @@ class CustomModel:
 
     def eval_model(self, params, X_eval, y_eval):
         """Evals model with StratifiedKFold and return mean score"""
-
         cv = StratifiedKFold(n_splits=self.config.cv.cv_num, shuffle = True, random_state=42)
         score_list = []
 
@@ -68,26 +65,16 @@ class CustomModel:
             return float(self.eval_model(params, X_processed, y))
 
         study = optuna.create_study(direction='maximize',
-                            storage=f"sqlite:///{self.config.model.name}_logs.db",
+                            storage=f"sqlite:///{self.config.tracker.db_dir}/{self.config.model.name}.db",
                             study_name=self.config.model.name,
                             sampler=optuna.samplers.TPESampler(seed=42),
                             load_if_exists=True)
-        study.optimize(objective, n_trials=1)
-
+        study.optimize(objective, n_trials=self.config.cv.n_trials)
         best_params = study.best_params
-
-        return best_params
-        #     best_model = model_class(**best_params)
-
-        #     best_pipeline = Pipeline(steps=[
-        #                 ('preprocessor', preprocessor),
-        #                 ('model', best_model)
-        #                 ])
-            
-        #     best_pipeline.fit(X, y)
-
-        #     return best_pipeline, study.best_params
+        self.save_experiment(self.config, best_params, study.best_value)
+        # Проверить, правильно ли брать study best_value
     
+
     @classmethod
     def get_col_types(cls, df: pd.DataFrame):
         """Gets numeric and categorical columns from df"""
@@ -95,41 +82,50 @@ class CustomModel:
         cat_cols = df.select_dtypes(include=["object", "category", "bool", "string"]).columns.tolist()
         return num_cols, cat_cols
 
-
-
-class CustomPreprocessor(BaseEstimator, TransformerMixin):
-    def __init__(self, num_cols, cat_cols):
-
-        num_branch = Pipeline([
-            ('scaler', StandardScaler()),
-            ('knn_imputer', SimpleImputer(strategy='median'))
-        ])
-        
-        cat_branch = Pipeline([
-            ('mode_imputer', SimpleImputer(strategy='most_frequent')),
-            ('encoder', OneHotEncoder(drop='first', handle_unknown='ignore'))
-        ])
-        
-        ord_branch = Pipeline([
-            ('mode_imputer', SimpleImputer(strategy='most_frequent')),
-            ('encoder', OrdinalEncoder(categories=ord_categories,
-                                       handle_unknown='use_encoded_value',
-                                       unknown_value=-1))
-        ])
-
-        # Combine all
-        self.preprocessor_first = ColumnTransformer([
-            ('numerical', num_branch, num_cols),
-            ('categorical', cat_branch, cat_cols),
-            ('ordinal', ord_branch, ord_cols)
-        ], remainder='drop')
-
-    def fit(self, X, y=None):
-        self.preprocessor.fit(X, y)
-        return self
     
-    def transform(self, X):
-        return self.preprocessor.transform(X)
+    def save_experiment(self, config, params, result):
+        tracker = ExperimentTracker(config, params, result)
+        tracker.save()
+        
+
+
+
+# class CustomPreprocessor(BaseEstimator, TransformerMixin):
+#     def __init__(self, num_cols, cat_cols):
+
+#         num_branch = Pipeline([
+#             ('scaler', StandardScaler()),
+#             ('knn_imputer', SimpleImputer(strategy='median'))
+#         ])
+        
+#         cat_branch = Pipeline([
+#             ('mode_imputer', SimpleImputer(strategy='most_frequent')),
+#             ('encoder', OneHotEncoder(drop='first', handle_unknown='ignore'))
+#         ])
+        
+#         ord_branch = Pipeline([
+#             ('mode_imputer', SimpleImputer(strategy='most_frequent')),
+#             ('encoder', OrdinalEncoder(categories=ord_categories,
+#                                        handle_unknown='use_encoded_value',
+#                                        unknown_value=-1))
+#         ])
+
+#         # Combine all
+#         self.preprocessor_first = ColumnTransformer([
+#             ('numerical', num_branch, num_cols),
+#             ('categorical', cat_branch, cat_cols),
+#             ('ordinal', ord_branch, ord_cols)
+#         ], remainder='drop')
+
+#     def fit(self, X, y=None):
+#         self.preprocessor.fit(X, y)
+#         return self
     
-    def fit_transform(self, X, y=None):
-        return self.preprocessor.fit_transform(X, y)
+#     def transform(self, X):
+#         return self.preprocessor.transform(X)
+    
+#     def fit_transform(self, X, y=None):
+#         return self.preprocessor.fit_transform(X, y)
+# 
+# 
+# 

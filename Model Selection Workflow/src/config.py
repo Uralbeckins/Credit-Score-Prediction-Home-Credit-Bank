@@ -38,10 +38,17 @@ class CrossVal:
 
 
 @dataclass
+class Tracker:
+    exp_name: str = 'example'
+    exp_dir: str = './experiments'
+    db_dir: str = './db'
+
+@dataclass
 class Config:
     data: Data
     model: Model
     cv: CrossVal
+    tracker: Tracker
 
     @classmethod
     def load_cfg(cls, path: Path):

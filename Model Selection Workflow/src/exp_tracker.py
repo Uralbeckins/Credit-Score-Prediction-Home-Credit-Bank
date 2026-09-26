@@ -16,19 +16,17 @@ class ExperimentTracker:
     }
 
     def __init__(self,
-                 experiments_dir: str = "experiments",
-                 exp_name: str = 'None',
-                 model_name: str = 'None',
+                 config,
                  params: dict = {},
-                 result: dict = {}
+                 result: float = 0
                  ):
-        self.experiments_dir = Path(experiments_dir)
-        self.model_name = model_name
-        self.exp_name = exp_name
+        self.experiments_dir = config.tracker.exp_dir
+        self.model_name = config.model.name
+        self.exp_name = config.tracker.exp_name
         self.params = params
         self.result = result
 
-        self.exp_file = self.experiments_dir / "registry.json"
+        self.exp_file = Path(self.experiments_dir + '/' + "registry.json")
         
 
     def load_previous_exp(self) -> dict:
@@ -57,7 +55,7 @@ class ExperimentTracker:
 
     def save(self):
         now = datetime.now()
-        metric_value = self.result['metric']
+        metric_value = self.result
 
         # проверить, лучший ли это результат для данной модели
         prev_exp_registry = self.load_previous_exp()
@@ -69,10 +67,10 @@ class ExperimentTracker:
             "model_name": self.model_name,
             "timestamp": now.strftime("%Y-%m-%d %H:%M"),
             "params": self.params,
-            "eval_results": self.result,
+            "eval_result": self.result,
             "is_best": is_best,
         }
 
-        file_path = self.experiments_dir / self.make_filename(metric_value, now)
+        file_path = self.experiments_dir + '/' + self.make_filename(metric_value, now)
         with open(file_path, "w") as f:
             json.dump(record, f, indent=2, default=str)
