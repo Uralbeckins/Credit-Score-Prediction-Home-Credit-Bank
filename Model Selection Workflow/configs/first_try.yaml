@@ -1,5 +1,5 @@
 data:
-  train_path: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/app_train_eda.csv'
+  train_path: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/dddata.csv'
   test_path: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/application_test.csv'
   target_col: 'TARGET'
   drop_cols: ['SK_ID_CURR']
@@ -19,13 +19,10 @@ model:
     
 cv:
   metric: 'ROC_AUC'
-  num: 2
+  cv_num: 2
   n_trials: 1
   # save_model: false
 
 tracker:
   exp_name: 'Tune'
   exp_dir: '/Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model Selection Workflow/experiments'
-
-
-
