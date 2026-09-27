@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 
 
 @dataclass
-class Data:
+class DataConfig:
     train_path: str
     test_path: str
     target_col: str
@@ -16,7 +16,7 @@ class Data:
 
 
 @dataclass
-class Param:
+class ParamSpace:
     """Описание одного гиперпараметра для Optuna."""
     type: str 
     low: Optional[float] = None
@@ -25,46 +25,40 @@ class Param:
     log: bool = False
 
 @dataclass
-class Model:
+class ModelConfig:
     name: str
     fixed_params: Dict[str, Any] = field(default_factory=dict)
-    search_space: Dict[str, Param] = field(default_factory=dict)
+    search_space: Dict[str, ParamSpace] = field(default_factory=dict)
 
 
 @dataclass
-class CrossVal:
-    cv_num: int = 5
+class CrossValConfig:
+    n_splits: int = 5
     n_trials: int = 50
 
 
 @dataclass
-class Tracker:
+class TrackerConfig:
     exp_name: str = 'example'
     exp_dir: str = './experiments'
     db_dir: str = './db'
 
 @dataclass
-class Config:
-    data: Data
-    model: Model
-    cv: CrossVal
-    tracker: Tracker
+class TuningConfig:
+    data: DataConfig
+    model: ModelConfig
+    cv: CrossValConfig
+    tracker: TrackerConfig
 
     @classmethod
-    def load_cfg(cls, path: Path):
+    def from_yaml(cls, path: Path):
         path = Path(path)
         with path.open("r", encoding="utf-8") as f:
             raw = yaml.safe_load(f)
             print(raw)
-        return from_dict(data_class=Config, data=raw)
+        return from_dict(data_class=TuningConfig, data=raw)
 
-    def get_model(self):
-        if self.model.name == 'LogisticRegression':
-            return LogisticRegression
-        else:
-            raise TypeError('Неизвестный тип модели')
-
-    def get_param_space(self, trial):
+    def suggest_params(self, trial):
         p = dict(self.model.fixed_params)
         for k, s in self.model.search_space.items():
             if s.type == "int":

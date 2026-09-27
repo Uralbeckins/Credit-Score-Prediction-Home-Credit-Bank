@@ -19,8 +19,8 @@ model:
     
 cv:
   metric: 'ROC_AUC'
-  cv_num: 2
-  n_trials: 1
+  n_splits: 2
+  n_trials: 3
   # save_model: false
 
 tracker:
