@@ -1,76 +1,71 @@
-import json
-from pathlib import Path
 from datetime import datetime
+from math import isfinite
+from pathlib import Path
+from typing import Any
+
+import yaml
 
 
 class ExperimentTracker:
-    """Трекер экспериментов: сохраняет результаты и ведёт реестр лучших моделей."""
+    """Save each run and keep the best result for every model."""
+    MODEL_ALIASES = {'LogisticRegression': 'LR'}
 
-    MODEL_ALIASES = {
-        "LogisticRegression": "LR",
-        "RandomForestClassifier": "RF",
-        "XGBClassifier": "XGB",
-        "LGBMClassifier": "LGBM",
-        "DecisionTreeClassifier": "DT",
-        "CatBoostClassifier": "CatBoost",
-    }
-
-    def __init__(self,
-                 config,
-                 params: dict = {},
-                 result: float = 0
-                 ):
-        self.experiments_dir = config.tracker.exp_dir
+    def __init__(self, config, params: dict, result: float):
+        self.config = config
+        self.experiments_dir = Path(config.tracker.exp_dir)
+        self.registry_file = self.experiments_dir / "registry.yaml"
         self.model_name = config.model.name
+        self.model_alias = self._alias(self.model_name)
         self.exp_name = config.tracker.exp_name
         self.params = params
-        self.result = result
+        self.result = float(result)
+        if not isfinite(self.result):
+            raise ValueError(f"Experiment metric must be finite, got {result!r}")
 
-        self.exp_file = Path(self.experiments_dir + '/' + "registry.json")
-        
+    @classmethod
+    def _alias(cls, model_name: str) -> str:
+        """Return the short alias for a model, falling back to the name itself."""
+        return cls.MODEL_ALIASES.get(model_name, model_name)
 
-    def load_previous_exp(self) -> dict:
-        """Check if last experiment file exists"""
-        if not self.exp_file.exists():
-            return {}
-        with open(self.exp_file, "r") as f:
-            return json.load(f)
+    def save(self) -> dict[str, Any]:
+        self.experiments_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.now().strftime("%m_%d_%H_%M_%S")
 
-    def save_exp(self, registry: dict) -> None:
-        with open(self.exp_file, "w") as f:
-            json.dump(registry, f, indent=2, default=str)
+        # Load the registry to compare against the current best for this model.
+        registry = {}
+        if self.registry_file.exists():
+            with self.registry_file.open("r", encoding="utf-8") as file:
+                registry = yaml.safe_load(file) or {}
 
-    # ---------- имя файла ----------
+        previous = registry.get("models", {}).get(self.model_name)
+        previous_best = previous["metric_value"] if previous else None
+        is_best = previous_best is None or self.result > previous_best
 
-    def make_filename(self, metric: float, now: datetime) -> str:
-        alias = self.MODEL_ALIASES.get(self.model_name)
-        if alias is None:
-            raise ValueError(
-                f"Модель '{self.model_name}' не распознана. "
-                f"Добавьте её в MODEL_ALIASES."
-            )
-        return f"{self.exp_name}_{alias}_{metric:.4f}_{now:%H:%M}.json"
 
-    # ---------- сохранение эксперимента ----------
-
-    def save(self):
-        now = datetime.now()
-        metric_value = self.result
-
-        # проверить, лучший ли это результат для данной модели
-        prev_exp_registry = self.load_previous_exp()
-        previous_best = prev_exp_registry.get('metric', 0)
-        is_best = metric_value > previous_best
-
+        filename = f"{timestamp}_{self.model_alias}_{self.result:.4f}.yaml"
         record = {
             "exp_name": self.exp_name,
             "model_name": self.model_name,
-            "timestamp": now.strftime("%Y-%m-%d %H:%M"),
-            "params": self.params,
-            "eval_result": self.result,
+            "timestamp": timestamp,
+            "metric": self.config.cv.metric,
+            "metric_value": self.result,
+            "best_params": self.params,
+            "config": self.config.to_dict(),
             "is_best": is_best,
         }
+        with (self.experiments_dir / filename).open("w", encoding="utf-8") as file:
+            yaml.safe_dump(record, file, allow_unicode=True, sort_keys=False)
+        if is_best:
 
-        file_path = self.experiments_dir + '/' + self.make_filename(metric_value, now)
-        with open(file_path, "w") as f:
-            json.dump(record, f, indent=2, default=str)
+            registry.setdefault("models", {})[self.model_name] = {
+                "metric": self.config.cv.metric,
+                "metric_value": self.result,
+                "timestamp": timestamp,
+                "exp_file": filename,
+                "best_params": self.params,
+            }
+            with self.registry_file.open("w", encoding="utf-8") as file:
+                yaml.safe_dump(registry, file, allow_unicode=True, sort_keys=False)
+        return record
+
+

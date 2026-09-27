@@ -1,0 +1,8 @@
+models:
+  LogisticRegression:
+    metric: ROC_AUC
+    metric_value: 0.8968543496695947
+    timestamp: 09_27_12_40_01
+    exp_file: 09_27_12_40_01_LR_0.8969.yaml
+    best_params:
+      C: 375

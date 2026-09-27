@@ -10,9 +10,10 @@ class BaseModelAdapter(BaseEstimator):
     def fit(self, X, y):
         pass
     def predict_proba(self, X):
-        pass    # всегда возвращаетpositives в 1-м столбце
+        pass
 
 class LogisticRegressionAdapter(BaseModelAdapter):
+    ALIAS = 'LR'
     def __init__(self, **params):
         self._model = LogisticRegression(**params)
     def fit(self, X, y):

@@ -1,0 +1,38 @@
+exp_name: try
+model_name: LogisticRegression
+timestamp: 09_27_13_02_44
+metric: ROC_AUC
+metric_value: 0.8968543496695947
+best_params:
+  C: 375
+config:
+  data:
+    train_path: /Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/dddata.csv
+    test_path: /Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/data/application_test.csv
+    target_col: TARGET
+    drop_cols: []
+    test_size: 0.2
+  model:
+    name: LogisticRegression
+    fixed_params: {}
+    search_space:
+      C:
+        type: int
+        low: 1
+        high: 1000
+        choices: null
+        log: false
+  cv:
+    n_splits: 2
+    n_trials: 3
+    metric: ROC_AUC
+  tracker:
+    exp_name: try
+    exp_dir: /Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model
+      Selection Workflow/experiments
+    db_dir: /Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model
+      Selection Workflow/db
+  seed: 42
+  source_config: /Users/uralgimazov/Desktop/Python/Practice/Credit-Score-Prediction-Home-Credit-Bank/Model
+    Selection Workflow/configs/first_try.yaml
+is_best: false

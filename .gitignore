@@ -12,6 +12,7 @@ __pycache__/
 *.log
 *.sqlite3
 *.sqlite
+*.db
 
 # Активы, созданные при сборке
 dist/

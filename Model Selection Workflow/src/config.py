@@ -1,9 +1,8 @@
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Optional, List, Dict
+from typing import Any, Dict, List, Optional
+
 import yaml
-from dacite import from_dict
-from sklearn.linear_model import LogisticRegression
 
 
 @dataclass
@@ -17,12 +16,14 @@ class DataConfig:
 
 @dataclass
 class ParamSpace:
-    """Описание одного гиперпараметра для Optuna."""
-    type: str 
+    """Description of one Optuna hyperparameter."""
+
+    type: str
     low: Optional[float] = None
     high: Optional[float] = None
     choices: Optional[List[Any]] = None
     log: bool = False
+
 
 @dataclass
 class ModelConfig:
@@ -33,41 +34,68 @@ class ModelConfig:
 
 @dataclass
 class CrossValConfig:
-    n_splits: int = 5
-    n_trials: int = 50
+    n_splits: int = 2
+    n_trials: int = 1
+    metric: str = "ROC_AUC"
 
 
 @dataclass
 class TrackerConfig:
-    exp_name: str = 'example'
-    exp_dir: str = './experiments'
-    db_dir: str = './db'
+    exp_name: str = ""
+    exp_dir: str = "./experiments"
+    db_dir: str = "./db"
+
 
 @dataclass
 class TuningConfig:
     data: DataConfig
     model: ModelConfig
-    cv: CrossValConfig
-    tracker: TrackerConfig
+    cv: CrossValConfig = field(default_factory=CrossValConfig)
+    tracker: TrackerConfig = field(default_factory=TrackerConfig)
+    seed: int = 42
+    source_config: str = ""
 
     @classmethod
-    def from_yaml(cls, path: Path):
-        path = Path(path)
-        with path.open("r", encoding="utf-8") as f:
-            raw = yaml.safe_load(f)
-            print(raw)
-        return from_dict(data_class=TuningConfig, data=raw)
+    def from_yaml(cls, path: Path) -> "TuningConfig":
+        config_path = Path(path).expanduser().resolve()
+        with config_path.open("r", encoding="utf-8") as file:
+            raw = yaml.safe_load(file)
+        if not isinstance(raw, dict):
+            raise ValueError(f"Config must be a YAML mapping: {config_path}")
 
-    def suggest_params(self, trial):
-        p = dict(self.model.fixed_params)
-        for k, s in self.model.search_space.items():
-            if s.type == "int":
-                p[k] = trial.suggest_int(k, s.low, s.high)
-            elif s.type == "float":
-                p[k] = trial.suggest_float(k, s.low, s.high, log=s.log)
-            elif s.type == "cat":
-                p[k] = trial.suggest_categorical(k, s.choices)
+        model_values = dict(raw["model"])
+        model_values["search_space"] = {
+            name: ParamSpace(**values)
+            for name, values in model_values.get("search_space", {}).items()
+        }
+        config = cls(
+            data=DataConfig(**raw["data"]),
+            model=ModelConfig(**model_values),
+            cv=CrossValConfig(**raw.get("cv", {})),
+            tracker=TrackerConfig(**raw.get("tracker", {})),
+            seed=raw.get("seed", 42),
+            source_config=str(config_path),
+        )
+        return config
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a serializable snapshot of every setting used for a run."""
+        return asdict(self)
+
+    def suggest_params(self, trial) -> dict[str, Any]:
+        params = dict(self.model.fixed_params)
+        for name, space in self.model.search_space.items():
+            if space.type == "int":
+                params[name] = trial.suggest_int(name, space.low, space.high)
+            elif space.type == "float":
+                params[name] = trial.suggest_float(
+                    name, space.low, space.high, log=space.log
+                )
+            elif space.type == "cat":
+                params[name] = trial.suggest_categorical(name, space.choices)
             else:
-                raise ValueError('Несуществующий тип fixed_param (int, float, cat)')
-        return p
-
+                raise ValueError(
+                    f"Unsupported search-space type {space.type!r}; "
+                    "expected int, float, or cat"
+                )
+        return params
